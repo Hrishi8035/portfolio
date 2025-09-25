@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hrishikesh N — Portfolio</title>
+  <meta name="description" content="Minimal, aesthetic & responsive portfolio with animations, typewriter, and dark mode toggle." />
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0f1724; /* dark */
+      --card: rgba(255,255,255,0.03);
+      --muted: #aab3c6;
+      --accent: linear-gradient(90deg,#7c3aed,#06b6d4);
+      --glass: rgba(255,255,255,0.04);
+      --glass-2: rgba(255,255,255,0.02);
+      --text: #e6eef8;
+      --shadow: rgba(2,6,23,0.7);
+    }
+    [data-theme='light']{
+      --bg: #f7f9fc;
+      --card: rgba(8,12,20,0.02);
+      --muted: #475569;
+      --glass: rgba(0,0,0,0.03);
+      --glass-2: rgba(0,0,0,0.01);
+      --text: #081124;
+      --shadow: rgba(2,6,23,0.08);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;padding:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.08), transparent),
+                  radial-gradient(900px 500px at 90% 90%, rgba(6,182,212,0.06), transparent),
+                  var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+      transition:background .4s ease,color .3s ease;
+    }
+
+    /* container */
+    .wrap{max-width:1100px;margin:48px auto;padding:28px}
+
+    /* navbar */
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:48px;height:48px;border-radius:12px;background:var(--card);display:grid;place-items:center;font-weight:700;box-shadow:0 6px 18px var(--shadow);}
+    .brand h1{font-size:16px;margin:0}
+    .navlinks{display:flex;gap:12px;align-items:center}
+    .navlinks a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600}
+    .navlinks a:hover{background:var(--glass);color:var(--text)}
+    .btn{cursor:pointer;padding:8px 12px;border-radius:10px;border:none;background:var(--card);color:var(--text);font-weight:600}
+
+    /* hero */
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:center;margin-bottom:36px}
+    .intro{padding:28px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);box-shadow:0 10px 30px var(--shadow)}
+    .intro h2{margin:0 0 8px 0;font-size:28px;line-height:1.05}
+    .typewrap{font-weight:700;color:transparent;background-clip:text;-webkit-background-clip:text;background-image:var(--accent);font-size:20px;margin-top:8px}
+    .intro p{color:var(--muted);margin-top:12px}
+
+    .profilecard{border-radius:16px;padding:18px;background:var(--card);box-shadow:0 10px 30px var(--shadow);display:flex;flex-direction:column;gap:12px}
+    .avatar{width:100%;height:220px;border-radius:12px;background:linear-gradient(120deg,#7c3aed,#06b6d4);display:grid;place-items:center;font-size:48px;font-weight:800}
+    .socials{display:flex;gap:10px}
+    .chip{padding:8px 10px;border-radius:999px;background:var(--glass);font-weight:600}
+
+    /* sections */
+    section{margin-bottom:40px}
+    h3.section-title{margin:0 0 14px 0;font-size:18px}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .card{padding:18px;border-radius:12px;background:linear-gradient(180deg,var(--glass),var(--glass-2));box-shadow:0 8px 20px var(--shadow);transition:transform .35s ease, box-shadow .35s ease}
+    .card:hover{transform:translateY(-8px);box-shadow:0 16px 40px var(--shadow)}
+    .skill-list{display:flex;flex-wrap:wrap;gap:8px}
+    .skill{background:transparent;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);font-weight:600}
+
+    /* projects */
+    .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .proj{display:flex;flex-direction:column;gap:12px}
+    .proj .img{height:140px;border-radius:10px;background:linear-gradient(90deg,#7c3aed,#06b6d4);display:grid;place-items:center;color:var(--text);font-weight:800}
+    .proj a{display:inline-block;text-decoration:none;padding:8px 10px;border-radius:8px;font-weight:700}
+
+    /* contact */
+    .contact-row{display:flex;gap:14px}
+    .contact-left{flex:1}
+    .contact-right{width:360px}
+    form input, form textarea{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);background:transparent;color:var(--text);resize:none}
+    form button{margin-top:8px;padding:10px 12px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+
+    /* footer */
+    footer{padding:18px;text-align:center;color:var(--muted);font-size:13px}
+
+    /* responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .cards{grid-template-columns:repeat(2,1fr)}
+      .proj-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:560px){
+      .wrap{padding:16px;margin:20px auto}
+      .navlinks{display:none}
+      .brand h1{font-size:14px}
+      .cards{grid-template-columns:1fr}
+    }
+
+    /* smooth scroll reveal */
+    .reveal{opacity:0;transform:translateY(18px);transition:all .7s cubic-bezier(.2,.9,.3,1)}
+    .reveal.show{opacity:1;transform:none}
+
+    /* small utilities */
+    .flex{display:flex;align-items:center;gap:8px}
+    .muted{color:var(--muted)}
+
+  </style>
+</head>
+<body>
+  <div class="wrap" id="top">
+    <nav class="nav">
+      <div class="brand">
+        <div class="logo">HN</div>
+        <div>
+          <h1>Hrishikesh N</h1>
+          <div class="muted" style="font-size:12px">Full Stack • Java • Software</div>
+        </div>
+      </div>
+
+      <div class="navlinks">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <button id="themeToggle" class="btn" aria-label="Toggle theme">🌙</button>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="intro reveal" id="intro">
+          <h2>Hello — I’m <span style="background:var(--accent);-webkit-background-clip:text;background-clip:text;color:transparent;">Hrishikesh</span></h2>
+          <div class="typewrap" id="typewriter">Full Stack Developer</div>
+          <p>I'm a developer who builds clean, performant web apps. I focus on Java, React, and production-ready code. I enjoy turning ideas into delightful, usable products.</p>
+          <div style="margin-top:16px;display:flex;gap:8px">
+            <a class="chip" href="#projects">See projects</a>
+            <a class="chip" href="#contact">Hire me</a>
+          </div>
+        </div>
+
+        <aside class="profilecard reveal" id="profile">
+          <div class="avatar">HN</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div class="flex" style="justify-content:space-between">
+              <div>
+                <div style="font-weight:800">Full Stack Developer</div>
+                <div class="muted" style="font-size:13px">Bangalore, India</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+                <div class="muted" style="font-size:12px">Available for hire</div>
+                <div class="chip">Open to remote</div>
+              </div>
+            </div>
+            <div class="socials">
+              <a href="https://github.com/Hrishi8035" class="muted" target="_blank" rel="noopener noreferrer">GitHub</a>
+              <a href="https://www.linkedin.com/in/hrishikesh-n-210174247/" class="muted" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="https://hrishi8035.github.io/portfolio" class="muted" target="_blank" rel="noopener noreferrer">Portfolio</a>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="about" class="reveal">
+        <h3 class="section-title">About</h3>
+        <div class="card">I build beautiful and maintainable web applications with a focus on performance, accessibility and developer experience. I enjoy learning new tools and shipping products that help people.</div>
+      </section>
+
+      <section id="skills" class="reveal">
+        <h3 class="section-title">Skills</h3>
+        <div class="cards">
+          <div class="card">
+            <strong>Languages</strong>
+            <div class="skill-list" style="margin-top:10px">
+              <span class="skill">Java</span>
+              <span class="skill">JavaScript</span>
+              <span class="skill">Python</span>
+              <span class="skill">MySQL</span>
+              <span class="skill">HTML & CSS</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <strong>Frameworks & Tools</strong>
+            <div class="skill-list" style="margin-top:10px">
+              <span class="skill">React</span>
+              <span class="skill">Node.js</span>
+              <span class="skill">Hibernate</span>
+              <span class="skill">Spring Boot</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <strong>Dev & Deployment</strong>
+            <div class="skill-list" style="margin-top:10px">
+              <span class="skill">Git</span>
+              <span class="skill">Docker</span>
+              <span class="skill">CI/CD</span>
+              <span class="skill">Vercel / GitHub Pages</span>
+              <span class="skill">Linux</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="reveal">
+        <h3 class="section-title">Projects</h3>
+        <div class="proj-grid">
+          <div class="proj card">
+            <div class="img">E-Commerce</div>
+            <div>
+              <strong>E-Commerce Website</strong>
+              <p class="muted">React, Node, Stripe — A responsive e-commerce app with cart, payments and admin panel.</p>
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <a href="#" class="chip">View</a>
+                <a href="#" class="chip">Code</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="proj card">
+            <div class="img">Insect AI</div>
+            <div>
+              <strong>Insect Recognition and Detection</strong>
+              <p class="muted">Flask, TensorFlow — Real-time inference API with 90% accuracy and REST endpoints.</p>
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <a href="#" class="chip">View</a>
+                <a href="#" class="chip">Code</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="proj card">
+            <div class="img">Student Portal</div>
+            <div>
+              <strong>Student Portal</strong>
+              <p class="muted">React, Axios — Dashboard, tasks, notifications and profile management.</p>
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <a href="#" class="chip">View</a>
+                <a href="#" class="chip">Code</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="proj card">
+            <div class="img">Portfolio</div>
+            <div>
+              <strong>Portfolio Website</strong>
+              <p class="muted">This site — responsive, animated, deploy-ready single-file template.</p>
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <a href="#" class="chip">Use</a>
+                <a href="#" class="chip">Fork</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="reveal">
+        <h3 class="section-title">Contact</h3>
+        <div class="contact-row">
+          <div class="contact-left card">
+            <p class="muted">Want to work together? Send a message — I'll reply within 48 hours.</p>
+            <form id="contactForm">
+              <input type="text" id="name" placeholder="Your name" required />
+              <input type="email" id="email" placeholder="Your email" required style="margin-top:8px" />
+              <textarea id="message" placeholder="Your message" rows="5" style="margin-top:8px" required></textarea>
+              <button type="submit" class="btn" style="background:linear-gradient(90deg,#7c3aed,#06b6d4);color:white">Send Message</button>
+            </form>
+          </div>
+
+          <div class="contact-right card">
+            <strong>Contact</strong>
+            <p class="muted" style="margin-top:8px">Location: Bangalore, India</p>
+            <p class="muted">Email: <a href="mailto:n.hrishi02@gmail.com" class="muted">n.hrishi02@gmail.com</a></p>
+            <p class="muted">Phone: +91 8310728035</p>
+            <div style="margin-top:8px">
+              <a class="chip" href="../Portfolio/resume/Hrishikesh.N_Web_Developer_Resume.pdf" download="Hrishikesh.N_Resume.pdf">Download CV</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="reveal">© <span id="year"></span> Hrishikesh N • Built with ❤️</footer>
+    </main>
+  </div>
+
+  <script>
+    // --- theme toggle & persist ---
+    const themeBtn = document.getElementById('themeToggle');
+    const userPref = localStorage.getItem('theme');
+    if(userPref) document.documentElement.setAttribute('data-theme', userPref);
+    const isLight = () => document.documentElement.getAttribute('data-theme') === 'light';
+    const updateIcon = () => themeBtn.textContent = isLight() ? '☀️' : '🌙';
+    updateIcon();
+    themeBtn.addEventListener('click', ()=>{
+      const next = isLight() ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateIcon();
+    });
+
+   // --- simple typewriter that cycles phrases ---
+    const phrases = ['Full Stack Developer','Java Developer','Software Developer','AI Enthusiast'];
+    let pIndex = 0, chIndex = 0, forward = true;
+    const typeEl = document.getElementById('typewriter');
+    function tick(){
+      const cur = phrases[pIndex];
+
+      // This logic is now cleaner and prevents the flash
+      if(forward){
+        chIndex++;
+        if(chIndex > cur.length){
+          forward = false;
+          // Add a pause at the end of the word
+          setTimeout(tick, 700);
+          return; // Stop this execution
+        }    
+      } else {
+        chIndex--;
+        if(chIndex < 0){
+          forward = true;
+          pIndex = (pIndex + 1) % phrases.length;
+          // When we switch words, chIndex must be reset to 0
+          chIndex = 0;
+        }
+      }
+
+      typeEl.textContent = cur.slice(0,chIndex) || '\u00A0';
+      const delay = forward ? 70 + Math.random()*50 : 30;
+      setTimeout(tick, delay);
+    }
+    tick();
+
+    // --- smooth reveal on scroll ---
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+    },{threshold:0.15});
+    reveals.forEach(r=>io.observe(r));
+
+    // --- smooth scroll for nav anchors ---
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (ev)=>{
+        ev.preventDefault();
+        const t = document.querySelector(a.getAttribute('href'));
+        if(!t) return window.scrollTo({top:0,behavior:'smooth'});
+        t.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+    });
+
+    // --- contact form basic validation (demo) ---
+    document.getElementById('contactForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if(!name||!email||!message){alert('Please complete all fields.');return}
+      // In production, replace with API call. Here we open mailto as a fallback.
+      const subject = encodeURIComponent('Portfolio Contact from ' + name);
+      const body = encodeURIComponent(message + '\n\n— ' + name + ' (' + email + ')');
+      window.location.href = `mailto:n.hrishi02@gmail.com?subject=${subject}&body=${body}`;
+    });
+
+    // set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // init: if no theme chosen, pick based on prefers-color-scheme
+    if(!localStorage.getItem('theme')){
+      const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      document.documentElement.setAttribute('data-theme', prefersLight ? 'light' : 'dark');
+      updateIcon();
+    }
+
+  </script>
+</body>
+</html>
